@@ -28,6 +28,12 @@ app.use(cors({
     credentials: true, // If you are using cookies or Authorization headers
 }));
 
+
+// app.use(cors({
+//     origin: process.env.FRONTEND_URL,
+//     credentials: true
+// }));
+
 app.listen(PORT, ()=>{
     console.log(`Server is running on port ${PORT}`)
 })

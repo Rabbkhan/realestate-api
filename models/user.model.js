@@ -18,6 +18,13 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
 
+  isVerified:{
+    type: Boolean,
+    default: false,
+  },
+
+  verificationCode: String,
+
   avatar:{
     type: String,
     default:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToK4qEfbnd-RN82wdL2awn_PMviy_pelocqQ&s"

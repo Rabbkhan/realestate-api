@@ -2,17 +2,19 @@ import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 import errorHandler from '../utils/error.js'
 import jwt from 'jsonwebtoken'
+import  {SendVerificationCode, WelcomeEmail}  from "../middleware/Email.js";
 
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
 
   const hashPassword = bcryptjs.hashSync(password, 10);
+  const verificationCode = Math.floor(100000 + Math.random()* 90000).toString()
 
-  const newUser = new User({ username, email, password: hashPassword });
+  const newUser = new User({ username, email, password: hashPassword, verificationCode });
 
   try {
     await newUser.save();
-
+SendVerificationCode(newUser.email, verificationCode)
     res.status(201).json("User created successfully!");
   } catch (error) {
     next(error);
@@ -96,4 +98,28 @@ try {
   next(error)
 }
 
+}
+
+
+
+export const VerifyEmail = async (req,res,next)=>{
+  try {
+    
+    const {code} = req.body;
+    const user =await User.findOne({
+      verificationCode:code
+    })
+
+    if(!user){
+      return res.status(400).json({success:false, message:"Invalid or Expired Code "})
+    }
+user.isVerified =true,
+user.verificationCode = undefined;
+await user.save()
+WelcomeEmail(user.email, user.username)
+res.status(201).json("Email Verified successfully!");
+
+  } catch (error) {
+    next(error)
+  }
 }

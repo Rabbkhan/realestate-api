@@ -2,7 +2,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv'
-import cors from 'cors'
 import userRouter from './routes/user.route.js'
 import authRouter from './routes/auth.route.js'
 import listingRouter from './routes/listing.route.js'
@@ -22,24 +21,16 @@ console.log('Connected to MongoDB!')
     console.log(err)
 })
 
-app.use(cors({
-    origin: 'http://localhost:5173', // or the live frontend URL
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
-    credentials: true, // If you are using cookies or Authorization headers
-}));
 
-
-// app.use(cors({
-//     origin: process.env.FRONTEND_URL,
-//     credentials: true
-// }));
 
 app.listen(PORT, ()=>{
     console.log(`Server is running on port ${PORT}`)
 })
 
 
-
+app.get('/', (req,res)=>{
+    res.send('App working fine')
+})
 app.use('/api/user',userRouter);
 app.use('/api/auth',authRouter)
 app.use('/api/listing', listingRouter)

@@ -2,6 +2,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv'
+import cors from 'cors'
 import userRouter from './routes/user.route.js'
 import authRouter from './routes/auth.route.js'
 import listingRouter from './routes/listing.route.js'
@@ -13,6 +14,15 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+
+
+app.use(cors({
+    origin: 'https://homestate25.netlify.app', // Replace with your frontend URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true // If you’re using cookies or authentication headers
+}));
+
+
 mongoose.connect(process.env.MONGO).then(()=>{
 console.log('Connected to MongoDB!')
 

@@ -16,9 +16,8 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "https://homestate25.netlify.app", // Replace with your frontend URL
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true, // If you’re using cookies or authentication headers
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
   })
 );
 

@@ -7,7 +7,7 @@ import authRouter from "./routes/auth.route.js";
 import listingRouter from "./routes/listing.route.js";
 import cookieParser from "cookie-parser";
 const PORT = 5000;
-dotenv.config();
+require("dotenv").config();
 
 const app = express();
 

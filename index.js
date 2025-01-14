@@ -14,23 +14,14 @@ dotenv.config();
 
 const app = express();
 
-// ES module equivalent of __dirname
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 app.use(express.json());
 app.use(cookieParser());
-
-// Serve static files from the frontend
-const buildpath = path.join(__dirname, "../client/dist");
-app.use(express.static(buildpath));
 
 // Configure CORS
 app.use(
   cors({
-    // origin: process.env.FRONTEND_URL,
-    // credentials: true,
-    origin: "*",
+    origin: process.env.FRONTEND_URL || "https://homestate25.netlify.app",
+    credentials: true,
   })
 );
 
